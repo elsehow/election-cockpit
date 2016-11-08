@@ -8,7 +8,7 @@ let simulate_server = '../lib/election-simulator/cmd.js'
 let spawn = require('child_process').spawn
 let child = spawn(simulate_server,['--port=5004'])
 let dnode = require('dnode')
-let d = dnode.connect(5004)
+let d = dnode({},{weak:false}).connect(5004)
 
 let remote;
 
