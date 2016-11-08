@@ -6,6 +6,22 @@ let kefir = require('kefir')
 
 let states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 
+let get = require('simple-get')
+let url =
+    'http://projects.fivethirtyeight.com/2016-election-forecast/US.json'
+
+function ft8S() {
+  return kefir.stream(emitter => {
+    get.concat(url, function (err, _, body) {
+      if (err) emitter.emit(err)
+      emitter.emit(body.toString())
+    })
+  }).map(JSON.parse).map(forecast => {
+    return forecast.forecasts.latest.D.models.plus.winprob
+  }).map(x => x/100)
+}
+
+
 function getS (url) {
   return kefir.stream(emitter => {
     request({
@@ -49,9 +65,11 @@ function stateS () {
     probS,
     forecastS,
     pwS(),
-  ], function (prob, forecast, pw) {
+    ft8S(),
+  ], function (prob, forecast, pw, ft8) {
     prob['worst-case'] = forecast
     prob['predictwise'] = pw
+    prob['fivethirtyeight'] = ft8
     return prob
   })
 }

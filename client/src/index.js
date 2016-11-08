@@ -19,11 +19,13 @@ function app (url) {
       graphable('WI'),
       graphable('OH'),
       graphable('IA'),
+      graphable('CO'),
     ])
 
     graph('forecasts', appEl, [
       graphable('worst-case', 'Nick\'s Worst Case&trade;'),
       graphable('predictwise', 'PredictWise (MSR)'),
+      graphable('fivethirtyeight', 'FiveThirtyEight'),
     ])
     // stateS.onValue(s => {
     //   appEl.innerHTML=
