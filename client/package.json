@@ -4,12 +4,9 @@
     "watch": "watchify -vd -p browserify-hmr test/index.js -o test/bundle.js",
     "start": "ecstatic test/ --port 9999",
     "dev": "npm run watch & npm start",
-    "bundle": "browserify index.js -o dist/bundle.js",
+    "bundle": "browserify index.js -t [ babelify --presets [ es2016 ] ] -o dist/bundle.js",
     "build": "npm run bundle; cp test/index.html dist/index.html"
   },
   "author": "elsehow",
-  "license": "BSD-2-Clause",
-  "devDependencies": {
-    "watchify": "^3.7.0"
-  }
+  "license": "BSD-2-Clause"
 }

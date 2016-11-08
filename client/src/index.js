@@ -8,6 +8,7 @@ function app (url) {
              name: name }
   }
   socket.on('connect', function () {
+    console.log('connected')
     stateS = kefir.fromEvents(socket, 'state')
 
     graph('states', appEl, [
