@@ -6,17 +6,5 @@
     "dev": "npm run watch & npm start"
   },
   "author": "elsehow",
-  "license": "BSD-2-Clause",
-  "devDependencies": {
-    "browserify-hmr": "^0.3.1",
-    "ecstatic": "^1.4.0",
-    "kefir": "^3.6.0",
-    "watchify": "^3.7.0"
-  },
-  "dependencies": {
-    "monotonic-timestamp": "0.0.9",
-    "rickshaw": "^1.6.0",
-    "ud": "^3.0.1",
-    "yo-yo": "^1.2.2"
-  }
+  "license": "BSD-2-Clause"
 }

@@ -5,17 +5,5 @@
   "scripts": {
     "test": "tape test/index.js",
     "watch": "runwatch \"**/*.js\" -r \"npm test\""
-  },
-  "devDependencies": {
-    "runwatch": "^0.1.3",
-    "socket.io-client": "^1.5.1",
-    "tape": "^4.5.1"
-  },
-  "dependencies": {
-    "kefir": "^3.6.0",
-    "minimist": "^1.2.0",
-    "request": "^2.78.0",
-    "simple-get": "^2.3.0",
-    "socket.io": "^1.5.1"
   }
 }
