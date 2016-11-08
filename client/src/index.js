@@ -11,7 +11,7 @@ function app (url) {
   let log = hyperlog(db, {
     valueEncoding: 'json',
   })
-  let appEl = document.createElement('pre')
+  let appEl = document.createElement('div')
 
   socket.on('connect', function () {
 
@@ -28,7 +28,6 @@ function app (url) {
                name: name }
     }
 
-
     graph('states', appEl, [
       graphable('FL'),
       graphable('NC'),
@@ -39,7 +38,7 @@ function app (url) {
       graphable('OH'),
       graphable('IA'),
       graphable('CO'),
-    ])
+    ], 'cool')
 
     graph('forecasts', appEl, [
       graphable('worst-case', 'Nick\'s Worst Case&trade;'),
