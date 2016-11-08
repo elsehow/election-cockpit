@@ -11,5 +11,6 @@
     "tape": "^4.5.1"
   },
   "dependencies": {
+    "dnode": "^1.2.2"
   }
 }

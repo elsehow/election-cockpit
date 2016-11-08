@@ -11,7 +11,8 @@ test('socket', t => {
     socket.on('state', s => {
       t.ok(s['CA'], 'CA')
       t.ok(s['AL'], 'AL')
-      t.ok(s['worst-case'], 'worst-case')
+      t.ok(s['worst-case'], JSON.stringify(s['worst-case']))
+      t.deepEquals(typeof(s['worst-case'].y),'number', 'worst-case')
       t.ok(s['predictwise'],
            'predictwise ' + s['predictwise'])
       t.ok(s['CA'].x,

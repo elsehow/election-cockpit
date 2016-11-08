@@ -30,16 +30,17 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "dnode": "^1.2.2",
     "kefir": "^3.6.0",
     "minimist": "^1.2.0",
+    "random-js": "^1.0.8",
+    "random-normal": "^1.0.0",
     "request": "^2.78.0",
+    "request-json": "^0.6.1",
+    "rickshaw": "^1.6.0",
     "simple-get": "^2.3.0",
     "socket.io": "^1.5.1",
     "socket.io-client": "^1.5.1",
-    "request-json": "^0.6.1",
-    "random-js": "^1.0.8",
-    "random-normal": "^1.0.0",
-    "rickshaw": "^1.6.0",
     "ud": "^3.0.1"
   }
 }

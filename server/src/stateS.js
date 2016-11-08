@@ -1,8 +1,26 @@
 let marketS = require('../../lib/markets-getter')
-let simulate = require('../../lib/election-simulator')
 let zipObject = require('zip-object');
 let request = require('request')
 let kefir = require('kefir')
+let truthy = x => !!x
+
+let simulate_server = '../lib/election-simulator/cmd.js'
+let spawn = require('child_process').spawn
+let child = spawn(simulate_server,['--port=5004'])
+let dnode = require('dnode')
+let d = dnode.connect(5004)
+
+let remote;
+
+d.on('remote', function (rem) {
+  remote = rem
+  })
+
+function simulate (probs) {
+  if (remote)
+    return kefir.fromCallback(cb => remote.simulate(probs, 10000, cb))
+  return kefir.constant(null)
+}
 
 let states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 
@@ -60,7 +78,7 @@ function stateS () {
   let probS = kefir
       .combine(states.map(marketS))
       .map(probs => zipObject(states, probs))
-  let forecastS = probS.map(simulate)
+  let forecastS = probS.flatMap(simulate).filter(truthy)
   return kefir.combine([
     probS,
     forecastS,
@@ -84,4 +102,5 @@ function stateS () {
     return res
   })
 }
+
 module.exports = stateS

@@ -7,7 +7,7 @@ let hyphy = require('hyphy')
 function app (url) {
 
   let socket = require('socket.io-client')(url)
-  var db = level('./election-cockpit')
+  var db = level('./election')
   let log = hyperlog(db, {
     valueEncoding: 'json',
   })
