@@ -7,7 +7,7 @@ let hyphy = require('hyphy')
 function app (url) {
 
   let socket = require('socket.io-client')(url)
-  var db = level('./election')
+  var db = level('./election-d')
   let log = hyperlog(db, {
     valueEncoding: 'json',
   })
@@ -22,6 +22,7 @@ function app (url) {
 
     let logS = hyphy(log)
         .map(v => v.value)
+        .throttle(25)
 
     function graphable (abbrev, name=abbrev) {
       return { stream: logS.map(v => v[abbrev]),
