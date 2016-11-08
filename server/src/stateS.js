@@ -67,10 +67,21 @@ function stateS () {
     pwS(),
     ft8S(),
   ], function (prob, forecast, pw, ft8) {
+    let epoch = Date.now()/1000
     prob['worst-case'] = forecast
     prob['predictwise'] = pw
     prob['fivethirtyeight'] = ft8
-    return prob
+    // add timestamp (epoch) to everything, as x
+    // and value as y
+    // (imagine a timeseries plot)
+    let res = {}
+    Object.keys(prob).forEach(k => {
+      res[k] = {
+        x: epoch,
+        y: prob[k],
+      }
+    })
+    return res
   })
 }
 module.exports = stateS

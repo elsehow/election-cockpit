@@ -5,5 +5,8 @@
   "scripts": {
     "test": "tape test/index.js",
     "watch": "runwatch \"**/*.js\" -r \"npm test\""
+  },
+  "devDependencies": {
+    "tape": "^4.6.2"
   }
 }

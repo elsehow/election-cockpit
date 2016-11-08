@@ -8,5 +8,10 @@
     "build": "npm run bundle; cp test/index.html dist/index.html"
   },
   "author": "elsehow",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "hyperlog": "^4.10.4",
+    "hyphy": "^2.0.2",
+    "level-browserify": "^1.1.0"
+  }
 }

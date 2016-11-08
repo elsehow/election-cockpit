@@ -1,15 +1,33 @@
+let level = require('level-browserify')
+let hyperlog = require('hyperlog')
+let kefir = require('kefir')
+let graph = require('../../lib/probability-graph')
+let hyphy = require('hyphy')
+
 function app (url) {
+
   let socket = require('socket.io-client')(url)
+  var db = level('./election-cockpit')
+  let log = hyperlog(db, {
+    valueEncoding: 'json',
+  })
   let appEl = document.createElement('pre')
-  let graph = require('../../lib/probability-graph')
-  let kefir = require('kefir')
-  function graphable (abbrev, name=abbrev) {
-    return { stream: stateS.map(v => v[abbrev]),
-             name: name }
-  }
+
   socket.on('connect', function () {
+
     console.log('connected')
     stateS = kefir.fromEvents(socket, 'state')
+    // save to hyperlog
+    stateS.onValue(s => log.append(s))
+
+    let logS = hyphy(log)
+        .map(v => v.value)
+
+    function graphable (abbrev, name=abbrev) {
+      return { stream: logS.map(v => v[abbrev]),
+               name: name }
+    }
+
 
     graph('states', appEl, [
       graphable('FL'),
@@ -28,10 +46,6 @@ function app (url) {
       graphable('predictwise', 'PredictWise (MSR)'),
       graphable('fivethirtyeight', 'FiveThirtyEight'),
     ])
-    // stateS.onValue(s => {
-    //   appEl.innerHTML=
-    //     JSON.stringify(s,0,2)
-    // })
   })
   return appEl
 }

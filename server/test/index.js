@@ -5,7 +5,6 @@ let s = server(9989)
 console.log('started')
 
 test('socket', t => {
-  t.plan(5)
   var socket = require('socket.io-client')('http://localhost:9989');
   socket.on('connect', function () {
     t.ok(true, 'connected')
@@ -15,6 +14,15 @@ test('socket', t => {
       t.ok(s['worst-case'], 'worst-case')
       t.ok(s['predictwise'],
            'predictwise ' + s['predictwise'])
+      t.ok(s['CA'].x,
+           'CA has a timestamp on x')
+      t.ok(s['CA'].y,
+           'and a value on y')
+      t.ok(s['predictwise'].x,
+           'predictwise has a unix epoch on x ' + s['predictwise'].x)
+      t.ok(s['predictwise'].y,
+           'and a value on y ' + s['predictwise'].y)
+      t.end()
     })
   })
 })
